@@ -2,8 +2,10 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.borders.model.Country;
 import it.polito.tdp.borders.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +30,22 @@ public class FXMLController {
 
     @FXML
     void doCalcolaConfini(ActionEvent event) {
+    	
+    	this.txtResult.clear();
+    	
+    	try {
+    		int anno = Integer.parseInt(this.txtAnno.getText());
+    		Map<Country, Integer> stats = model.creaGrafo(anno);
+    		
+    		txtResult.appendText("Numero stati: " + stats.size() + "\n");
+    		
+    		for (Country c:stats.keySet())
+    			txtResult.appendText("Stato: " + c + " collegamenti: " + stats.get(c) + "\n");	
+	
+    	} catch (NumberFormatException e) {
+    		txtResult.setText("Formato anno non valido!");
+    		return;
+    	}
 
     }
 
